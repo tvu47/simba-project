@@ -1,0 +1,40 @@
+server:
+  port: 9000
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/authorization_server_db
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          google-idp:
+            provider: google
+            client-id: ${GOOGLE_CLIENT_ID:754943572637-tqic29v36v6ephl13ufi90i2k96qqj8g.apps.googleusercontent.com}
+            client-secret: ${GOOGLE_CLIENT_SECRET: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}
+            scope: openid, https://www.googleapis.com/auth/userinfo.profile, https://www.googleapis.com/auth/userinfo.email
+            client-name: oauth2-simba-client
+        provider:
+          google:
+            user-name-attribute: email
+#http://127.0.0.1:9000/login/oauth2/code/messaging-client-oidc
+#
+#http://127.0.0.1:9000/authorized
+#
+#http://127.0.0.1:9000/index
+#
+#http://127.0.0.1:9000/login/oauth2/code/google-idp
+#
+#https://oauthdebugger.com/debug

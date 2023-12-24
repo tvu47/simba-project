@@ -1,0 +1,2 @@
+CREATE DATABASE users_external_db ENCODING ='UTF8';
+CREATE SCHEMA IF NOT EXISTS sbmaster;

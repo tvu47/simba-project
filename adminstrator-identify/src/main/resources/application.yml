@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sb-adminstrator-identify
+  liquibase:
+    change-log: "classpath:/db/changelog/changelog-master.xml"
+    enabled: true
+# security:
+#   secret_key: 198579a91e4d99c1a7d8428d9d8a6b3e3d4ca0e5c6270558bb32addabf076488bd449263cc28e83f9b964b14c7d80f619b31974459f6edff48993e0905a12df7
+# okta:
+#   oauth2:
+#     issuer: https://dev-qisf2qefkmr03x36.us.auth0.com/
+#     client-id: WM0SRrFvJkTetUy3dTkbL3lS9umTEn5N
+#     client-secret: OmZ22Di-xyYbNRoBalIQfWNGnBgbuPcDxieWHrKJyu4-0TtOZ47BYALhw29ny6SP

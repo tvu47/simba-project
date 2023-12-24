@@ -1,0 +1,66 @@
+server:
+  port: 8888
+  error:
+    whitelabel:
+      enabled: false
+  servlet:
+    context-path: /sb-centralize-configuration
+
+spring:
+  application:
+    name: sb-centralize-configuration
+  profiles:
+    active:
+      - local
+      - jdbc
+      - monitor
+      - query
+  datasource:
+    hikari:
+      max-lifetime: 900000
+      connection-timeout: 50000
+      pool-name: ${spring.application.name}-local-pool
+      minimum-idle: 1
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/centralize_configuration?currentSchema=sbmaster
+
+  liquibase:
+    change-log: "classpath:/db/changelog/changelog-master.xml"
+    enabled: true
+    parameters:
+      "[DATABASE_URL]": localhost:5432
+      "[DB_USER]": users_external_db
+      "[DB_ADMIN]": admin_db
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        temp:
+          "[use_jdbc_metadata_defaults]": false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        "[generate_statistics]": false
+        jdbc:
+          "[batch_size]": 50
+    show-sql: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  cloud:
+    config:
+      server:
+        jdbc:
+          sql: SELECT  key,value  FROM sbmaster.configuration where (application =? or application = 'global') and profile =? and label = ?
+          order: 1
+        default-label: "default"
+        default-profile: "default"
+
+  h2:
+    console:
+      enabled: true
+logging:
+  level:
+    "[net.ttddyy.dsproxy]": trace
+  pattern:
+    level: "${spring.application.name}|%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-},%X{CorrelationId}"
+    console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}|2|%level|${spring.application.name:-}|%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-},%X{Correlation-ID}|${PID:-}|%thread|%logger{40}|%message%n"

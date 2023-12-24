@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sb-users-identify
+  liquibase:
+    change-log: "classpath:/db/changelog/changelog-master.xml"
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-qisf2qefkmr03x36.us.auth0.com
+          clientId: ND2wzP4XHtg8TxsEBTE5Eew74EvxcbrJ
+          clientSecret: Z29RF6OhdFZKDjH3nHlfZK_lSAIUBa_TCpAeDm3RlNTcF92RArVzzNrZwwpW6twI
